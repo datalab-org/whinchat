@@ -1,0 +1,14 @@
+# Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
+_commit: v0.2.2
+_src_path: git@github.com:datalab-org/datalab-app-plugin-template
+author_email: dev@datalab-org.io
+author_fullname: datalab development team
+copyright_date: '2026'
+copyright_holder: datalab development team
+copyright_holder_email: dev@datalab-org.io
+package_name: whinchat
+project_name: whinchat
+repository_name: whinchat
+repository_namespace: datalab-org
+short_description: A chat block and other AI/LLM functionality for datalab.
+
