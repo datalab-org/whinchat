@@ -13,4 +13,4 @@ Whinchat was previously a core data block until version v0.7.x of *datalab*, whe
 
 <!-- This file was edited with the assistance of an AI model and requires human review from the contributor. -->
 The plugin provides the server-side `ChatBlock` (blocktype `chat`) and its webapp component, declared in the manifest at `src/whinchat/webapp/index.js` and collected into the *datalab* webapp by `invoke dev.install`.
-The npm packages used by `MessageBubble.vue` (`markdown-it`, `highlight.js` and `mermaid`) must be provided by the core *datalab* webapp, as plugins cannot yet declare their own npm dependencies.
+Its npm dependencies (`markdown-it`, `highlight.js` and `mermaid`) are declared in `src/whinchat/webapp/package.json`.

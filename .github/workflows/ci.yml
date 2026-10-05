@@ -104,6 +104,12 @@ jobs:
         with:
           enable-cache: true
 
+      # Plugins with webapp dependencies are installed with yarn by `invoke dev.install`
+      - name: Set up Node 22
+        uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+
       - name: Write plugins.toml
         run: |
           cat > datalab/plugins.toml <<EOF
@@ -135,3 +141,6 @@ jobs:
         run: |
           test -f datalab/webapp/src/plugins/whinchat/ChatBlock.vue
           grep -F 'import whinchat from "./whinchat/index.js";' datalab/webapp/src/plugins/panels.generated.js
+          # the plugin's npm dependencies were installed as a yarn workspace
+          test -L datalab/webapp/node_modules/whinchat-webapp
+          test -d datalab/webapp/node_modules/markdown-it
