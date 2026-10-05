@@ -78,7 +78,7 @@ jobs:
     env:
       # datalab ref to install into; webapp manifest collection requires a
       # version of datalab that supports plugin manifests
-      DATALAB_REF: main
+      DATALAB_REF: ml-evs/block-vue
 
     steps:
       - uses: actions/checkout@v5
