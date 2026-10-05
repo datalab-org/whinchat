@@ -9,7 +9,6 @@
 Whinchat is a [*datalab*](https://datalab-org.io) plugin generated using the [datalab-app-plugin-template](https://github.com/datalab-org/datalab-app-plugin-template) template.
 
 Whinchat was previously a core data block until version v0.7.x of *datalab*, when it was moved out to this repository.
-The initial version at the time of moving was released as v1.0.0; likely v2.0.0 will follow soon with a restructuring of the plugin to use more modern agent runners and tools.
 
 
 <!-- This file was edited with the assistance of an AI model and requires human review from the contributor. -->

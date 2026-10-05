@@ -21,10 +21,10 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - name: Set up Python 3.10
+      - name: Set up Python 3.11
         uses: actions/setup-python@v5
         with:
-          python-version: "3.10"
+          python-version: "3.11"
 
       - name: Set up uv
         uses: astral-sh/setup-uv@v6
@@ -49,7 +49,7 @@ jobs:
       fail-fast: false
       max-parallel: 2
       matrix:
-        python-version: ["3.10", "3.11"]
+        python-version: ["3.11"]
 
     steps:
       - uses: actions/checkout@v5
@@ -75,3 +75,69 @@ jobs:
       - name: Run all tests
         run: |
           uv run pytest -rs -vvv ./tests
+
+  datalab-install:
+    name: Install alongside datalab
+    runs-on: ubuntu-latest
+
+    env:
+      # datalab ref to install into; webapp manifest collection requires a
+      # version of datalab that supports plugin manifests
+      DATALAB_REF: main
+
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          path: whinchat
+          fetch-depth: 0
+
+      - uses: actions/checkout@v5
+        with:
+          repository: datalab-org/datalab
+          ref: ${{ env.DATALAB_REF }}
+          path: datalab
+          # setuptools_scm needs the history to version datalab-server
+          fetch-depth: 0
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          version: "${{ env.UV_VERSION }}"
+          enable-cache: true
+
+      - name: Write plugins.toml
+        run: |
+          cat > datalab/plugins.toml <<EOF
+          dependencies = ["whinchat"]
+
+          [tool.uv.sources]
+          whinchat = { path = "../whinchat" }
+          EOF
+
+      - name: Install datalab with plugins
+        working-directory: datalab/pydatalab
+        run: |
+          uv sync --locked --all-extras --dev
+          uv run invoke dev.install
+
+      - name: Check the chat block is loaded from the plugin
+        working-directory: datalab/pydatalab
+        # --no-sync: a plain `uv run` would re-sync and uninstall the plugin
+        run: |
+          uv run --no-sync python - <<EOF
+          from pydatalab.apps import BLOCK_TYPES, load_block_plugins
+
+          plugins = load_block_plugins()
+          assert plugins["chat"].__module__ == "whinchat.blocks", plugins
+          assert "chat" in BLOCK_TYPES
+          EOF
+
+      - name: Check the webapp component was collected
+        run: |
+          test -f datalab/webapp/src/plugins/whinchat/ChatBlock.vue
+          grep -F 'import whinchat from "./whinchat/index.js";' datalab/webapp/src/plugins/panels.generated.js
