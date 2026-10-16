@@ -65,7 +65,7 @@ Answer questions in markdown. Specify the language for all markdown code blocks.
 Be as concise as possible. When saying your name, type a bird emoji right after whinchat 🐦.
         """,
         "temperature": 0.2,
-        "model": "gpt-4o",
+        "model": "gpt-6-luna",
         "available_models": AVAILABLE_MODELS,
     }
 
@@ -125,10 +125,10 @@ Start with a friendly introduction and give me a one sentence summary of what th
             if self.data["messages"][-1]["role"] not in ("user", "system"):
                 return
 
-        if self.data.get("model") not in AVAILABLE_MODELS:
-            bad_model = self.data.get("model")
+        requested_model = self.data.get("model")
+        if requested_model not in AVAILABLE_MODELS or AVAILABLE_MODELS[requested_model].deprecated:
             warnings.warn(
-                f"Chatblock received an unknown or deprecated model: {bad_model}. Reverting to default model {self.defaults['model']}."
+                f"Chatblock received an unknown or deprecated model: {requested_model}. Reverting to default model {self.defaults['model']}."
             )
             self.data["model"] = self.defaults["model"]
 

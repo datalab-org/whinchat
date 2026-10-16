@@ -15,8 +15,12 @@ DataBlockBase as a prop, and save from within DataBlockBase  -->
           <div class="input-group">
             <label class="mr-2">Model:</label>
             <select v-model="modelName" class="form-control">
-              <option v-for="model in Object.keys(availableModels || {})" :key="model">
-                {{ model }}
+              <option
+                v-for="(model, name) in availableModels || {}"
+                :key="name"
+                :value="name"
+              >
+                {{ name }}{{ model.deprecated ? " (deprecated)" : "" }}
               </option>
             </select>
           </div>
