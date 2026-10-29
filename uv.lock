@@ -1,5 +1,5 @@
 version = 1
-revision = 3
+revision = 5
 requires-python = "==3.11.*"
 
 [[package]]
@@ -458,8 +458,8 @@ wheels = [
 
 [[package]]
 name = "datalab-server"
-version = "0.8.0a2.post5+g31fbb761c"
-source = { git = "https://github.com/datalab-org/datalab?subdirectory=pydatalab&branch=ml-evs%2Fblock-vue#31fbb761cfe2540f81d0c67040b10fdda9db5e61" }
+version = "0.8.0a3"
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "bokeh" },
     { name = "deepdiff" },
@@ -472,6 +472,10 @@ dependencies = [
     { name = "pymongo" },
     { name = "python-dotenv" },
     { name = "tomlkit" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/8f/d4/dcbd099ca3b2aabcb071d55b84060801c20a7cb2354c43ed46c28836a1f4/datalab_server-0.8.0a3.tar.gz", hash = "sha256:ec9da8d328b9b3c4a0e358ec21fc25e265e546fe14aaf3b66443bd23aad27952", size = 6068698, upload-time = "2026-10-22T21:33:17.204Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/df/d6/27746198a1925c54ae71d5053805b7282629161896738f04c6fc0e94bfcf/datalab_server-0.8.0a3-py3-none-any.whl", hash = "sha256:6ae1e9f619583af8f2d0ebe1c170baac419062b5827b0c4ba3838f23b5ae69a9", size = 243348, upload-time = "2026-10-22T21:33:15.354Z" },
 ]
 
 [package.optional-dependencies]
@@ -2378,7 +2382,7 @@ requires-dist = [
 
 [package.metadata.requires-dev]
 dev = [
-    { name = "datalab-server", extras = ["server"], git = "https://github.com/datalab-org/datalab?subdirectory=pydatalab&branch=ml-evs%2Fblock-vue" },
+    { name = "datalab-server", extras = ["server"], specifier = ">=0.8.0a3" },
     { name = "docstring-inheritance", specifier = "~=2.2" },
     { name = "griffe-inherited-docstrings", specifier = "~=1.1" },
     { name = "markdown-callouts", specifier = "~=0.4" },
